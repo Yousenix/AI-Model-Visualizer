@@ -62,7 +62,7 @@ for i in range(iterations):
 
     history_w.append(w)
     history_b.append(b)
-    history_mse.append(np.mean(error ** 2))
+    history_mse.append(mse)
 
 
     if iteration % 100 == 0:
