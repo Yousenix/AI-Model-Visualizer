@@ -2,13 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+iterations = int(input("Iterations : "))
+
 x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
 y = np.array([2.1, 4.2, 5.8, 8.3, 10.1, 12.2, 13.9, 16.4, 18.1])
 
 w = 0
 b = 0
 
-learning_rate = 0.00001
+learning_rate = float(input("Learning rate : "))
 
 history_w = []
 history_b = []
@@ -20,31 +22,43 @@ plt.ion()
 
 figure, axes = plt.subplots(2, 2)
 
-
-axes[1, 1].remove()
-
 line1, = axes[0, 0].plot([], [] , color = "blue")
+axes[0, 0].set_xlabel("Iteration")
+axes[0, 0].set_ylabel("w")
 line2, = axes[0, 1].plot([], [] , color = "green")
+axes[0, 1].set_xlabel("Iteration")
+axes[0, 1].set_ylabel("b")
 line3, = axes[1, 0].plot([], [] , color = "red")
+axes[1, 0].set_xlabel("Iteration")
+axes[1, 0].set_ylabel("MSE")
+axes[1, 1].scatter(x, y, color="black", label="Data")
+line4, = axes[1, 1].plot([], [], color="purple", label="Model")
+axes[1, 1].set_xlabel("X")
+axes[1, 1].set_ylabel("Y / Prediction")
+axes[1, 1].legend()
 
 axes[0, 0].set_title("w")
 axes[0, 1].set_title("b")
 axes[1, 0].set_title("MSE")
+axes[1, 1].set_title("Regression")
 
 
-for i in range(100000):
+for i in range(iterations):
     iteration += 1
     history_iteration.append(iteration)
 
     y_pred = w * x + b
-
     error = y_pred - y
 
-    gradient_w = (2 / len(x)) * np.sum(x * error)
+    gradient_w = (2 / len(x)) * np.sum(x * error)   
     gradient_b = (2 / len(x)) * np.sum(error)
 
     w -= learning_rate * gradient_w
     b -= learning_rate * gradient_b
+
+    y_pred = w * x + b
+    error = y_pred - y
+    mse = np.mean(error ** 2)
 
     history_w.append(w)
     history_b.append(b)
@@ -56,6 +70,7 @@ for i in range(100000):
         line1.set_data(history_iteration, history_w)
         line2.set_data(history_iteration, history_b)
         line3.set_data(history_iteration, history_mse)
+        line4.set_data(x, w * x + b)
 
         for ax in axes.flat:
             if ax.has_data():
