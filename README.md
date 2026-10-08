@@ -1,4 +1,3 @@
-
 # AI Model Visualizer 🤖📊
 
 A simple machine learning visualization project built with **Python, NumPy, and Matplotlib**.
